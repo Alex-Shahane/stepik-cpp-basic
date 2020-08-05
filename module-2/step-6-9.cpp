@@ -5,14 +5,14 @@ unsigned min(unsigned a, unsigned b) {
 }
 
 char* resize(const char* str, unsigned size, unsigned new_size) {
-	char* new_str = new char [new_size];
+    char* new_str = new char [new_size];
     size = min(size, new_size);
 
     while (size--)
-	    new_str[size] = str[size];
+        new_str[size] = str[size];
 
-	delete [] str;
-	return new_str;
+    delete [] str;
+    return new_str;
 }
 
 void print(const char* str, unsigned size) {
