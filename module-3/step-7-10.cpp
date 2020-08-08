@@ -37,7 +37,6 @@ struct String {
         return *this;
     }
 
-
     void swap(String& other) {
         std::swap(this->str, other.str);
         std::swap(this->size, other.size);
