@@ -1,63 +1,8 @@
-#include <iostream>
-
-struct Expression {
-    virtual ~Expression() = default;
-    virtual double evaluate() const = 0;
-    virtual int type() const {
-        return 0;
-    };
+struct Expression { 
 };
-
-struct Number : Expression {
-    Number(double value)
-        : value(value)
-    {}
-
-    double evaluate() const {
-        return value;
-    }
-
-private:
-    double value;
-};
-
-struct BinaryOperation : Expression {
-
-    BinaryOperation(Expression const* left, char op, Expression const* right)
-        : left(left), op(op), right(right)
-    { }
-
-    ~BinaryOperation() {
-        delete left;
-        left = nullptr;
-        delete right;
-        right = nullptr;
-    }
-
-    double evaluate() const override {
-        switch (this->op) {
-        case '+':
-            return left->evaluate() + right->evaluate();
-        case '-':
-            return left->evaluate() - right->evaluate();
-        case '*':
-            return left->evaluate() * right->evaluate();
-        case '/':
-            return left->evaluate() / right->evaluate();
-        default:
-            return 0;
-        }
-    }
-
-private:
-    Expression const* left;
-    Expression const* right;
-    char op;
-};
-
 
 struct ScopedPtr {
-    explicit ScopedPtr(Expression* ptr = 0)
+    explicit ScopedPtr(Expression* ptr = nullptr)
         : ptr_(ptr) 
     { }
 
@@ -76,7 +21,7 @@ struct ScopedPtr {
         return new_ptr;
     }
 
-    void reset(Expression* ptr = 0) {
+    void reset(Expression* ptr = nullptr) {
         delete ptr_;
         ptr_ = ptr;
     }
@@ -88,7 +33,6 @@ struct ScopedPtr {
     Expression* operator->() const {
         return ptr_;
     }
-
 
 private:
     ScopedPtr(const ScopedPtr&);
