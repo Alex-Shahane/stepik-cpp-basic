@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstddef> // size_t
 #include <cstring> // strlen, strcpy
 #include <algorithm> // std::swap
 
@@ -28,12 +27,7 @@ struct String {
     }
 
     String& operator=(const String& other) {
-        if (this != &other) {
-            delete [] str;
-            size = other.size;
-            str = new char [size + 1];
-            strcpy(str, other.str);
-        }
+        String(other).swap(*this);
         return *this;
     }
 
