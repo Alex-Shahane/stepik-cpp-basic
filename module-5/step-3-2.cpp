@@ -1,8 +1,6 @@
-struct Expression { 
-};
-
+template <typename T>
 struct ScopedPtr {
-    explicit ScopedPtr(Expression* ptr = nullptr)
+    explicit ScopedPtr(T* ptr = nullptr)
         : ptr_(ptr) 
     { }
 
@@ -11,37 +9,40 @@ struct ScopedPtr {
         ptr_ = nullptr;
     }
 
-    Expression* get() const {
+    T* get() const {
         return ptr_;
     }
 
-    Expression* release() {
-        Expression* new_ptr = ptr_;
+    T* release() {
+        T* new_ptr = ptr_;
         ptr_ = nullptr;
         return new_ptr;
     }
 
-    void reset(Expression* ptr = nullptr) {
+    void reset(T* ptr = nullptr) {
         delete ptr_;
         ptr_ = ptr;
     }
 
-    Expression& operator*() const {
+    T& operator*() const {
         return *ptr_;
     }
 
-    Expression* operator->() const {
+    T* operator->() const {
         return ptr_;
     }
 
 private:
     ScopedPtr(const ScopedPtr&);
-
     ScopedPtr& operator=(const ScopedPtr&);
 
-    Expression* ptr_;
+    T* ptr_;
+};
+
+struct Expr { 
 };
 
 int main() {
+    ScopedPtr<Expr> p(new Expr);
     return 0;
 }
