@@ -1,8 +1,6 @@
 #include <algorithm>
 
-struct Expression { 
-};
-
+template <typename T>
 struct SharedPtr {
     struct PtrCounter {
         PtrCounter()
@@ -12,7 +10,7 @@ struct SharedPtr {
         unsigned counter;
     };
 
-    explicit SharedPtr(Expression* ptr = nullptr)
+    explicit SharedPtr(T* ptr = nullptr)
         : ptr_(ptr)
         , ptr_counter(ptr ? new PtrCounter : nullptr) {
     }
@@ -42,19 +40,19 @@ struct SharedPtr {
         return *this;
     }
 
-    Expression* get() const {
+    T* get() const {
         return ptr_;
     }
 
-    void reset(Expression* ptr = nullptr) {
+    void reset(T* ptr = nullptr) {
         SharedPtr(ptr).swap(*this);
     }
 
-    Expression& operator*() const {
+    T& operator*() const {
         return *ptr_;
     }
 
-    Expression* operator->() const {
+    T* operator->() const {
         return ptr_;
     }
 
@@ -64,10 +62,14 @@ struct SharedPtr {
     }
 
 private:
-    Expression* ptr_;
+    T* ptr_;
     PtrCounter* ptr_counter;
 };
 
+struct Expr { 
+};
+
 int main() {
+    SharedPtr<Expr> p(new Expr);
     return 0;
 }
